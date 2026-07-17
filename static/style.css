@@ -1,0 +1,411 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, "Noto Sans KR", sans-serif;
+    background: #f0edeae4;
+    color: #222;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.hero {
+    position: relative;
+    background: rgba(0, 0, 0, 0.5);
+
+    /* 기존 배경색이나 그라데이션만 아래 사진으로 변경 */
+    background-image: url("/static/images/hero.jpg");
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+
+    /* 기존에 사용하던 높이와 여백은 유지 */
+    padding: 80px 0 70px;
+}
+
+/* 사진 위에 단색 어두운 막 */
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+}
+
+/* 기존 중앙 정렬 설정을 반드시 유지 */
+.hero-inner {
+    position: relative;
+    z-index: 1;
+
+    max-width: 1340px;
+    margin: 0 auto;
+    padding: 0 32px;
+}
+
+.hero h1 {
+    color: #fff;
+}
+
+.hero .subtitle,
+.hero .eyebrow,
+.hero .category-title,
+.hero .category-group label {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+
+h1 {
+    margin: 0;
+    font-size: clamp(36px, 6vw, 68px);
+    line-height: 1.05;
+    font-weight: 400;
+}
+
+.subtitle {
+    margin: 18px 0 30px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 18px;
+}
+
+.search-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 160px 110px;
+    gap: 10px;
+}
+
+.search-form input,
+.search-form select,
+.search-form button {
+    min-height: 52px;
+    border: 0;
+    border-radius: 12px;
+    font-size: 16px;
+}
+
+.search-form input,
+.search-form select {
+    padding: 0 16px;
+}
+
+.search-form button {
+    background: #f0b35b;
+    color: #16120d;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.quick-keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    margin-top: 18px;
+    font-size: 14px;
+}
+
+.quick-keywords span {
+    opacity: 0.6;
+    margin-right: 4px;
+}
+
+.quick-keywords a {
+    padding: 7px 11px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 999px;
+}
+
+.category-search {
+    margin-top: 26px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.category-title {
+    margin: 0 0 12px;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.6;
+}
+
+.category-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.category-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    padding: 6px 8px 6px 18px;
+}
+
+.category-group label {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.75);
+    white-space: nowrap;
+}
+
+.category-group select {
+    appearance: none;
+    -webkit-appearance: none;
+    min-width: 150px;
+    min-height: 40px;
+    border: 0;
+    border-radius: 999px;
+    padding: 0 34px 0 16px;
+    font-size: 15px;
+    color: #16120d;
+    background-color: #ffffff;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23555'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    cursor: pointer;
+}
+
+.category-group select:focus-visible {
+    outline: 2px solid #f0b35b;
+    outline-offset: 2px;
+}
+
+.container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 44px 24px 80px;
+}
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.result-header h2 {
+    margin: 4px 0 6px;
+    font-size: 30px;
+}
+
+.result-header p {
+    margin: 0;
+    color: #666;
+}
+
+.result-label {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.download-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 18px;
+    border-radius: 10px;
+    background: #222;
+    color: white;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.download-button.secondary {
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.cocktail-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border-radius: 20px;
+     background: #fdfcfb;
+    box-shadow:
+        0 4px 10px rgba(0,0,0,0.06),
+        0 12px 24px rgba(0,0,0,0.08);
+}
+
+.cocktail-card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+        0 10px 20px rgba(0,0,0,0.10),
+        0 20px 40px rgba(0,0,0,0.16);
+}
+
+.cocktail-card img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 20px 20px 0 0;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.badges span {
+    padding: 5px 8px;
+    border-radius: 999px;
+    background: #f1ece5;
+    color: #5b4b3c;
+    font-size: 12px;
+}
+
+.cocktail-card h3 {
+    margin: 0 0 8px;
+    font-size: 23px;
+}
+
+.glass {
+    margin: 0 0 18px;
+    color: #777;
+    font-size: 14px;
+}
+
+.cocktail-card h4 {
+    margin: 0 0 10px;
+    font-size: 15px;
+}
+
+.ingredient-list {
+    display: grid;
+    gap: 7px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.ingredient-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    border-bottom: 1px solid #eee9e2;
+    padding-bottom: 7px;
+    font-size: 14px;
+}
+
+.ingredient-list strong {
+    color: #7a5a37;
+    text-align: right;
+}
+
+details {
+    margin-top: 18px;
+}
+
+summary {
+    cursor: pointer;
+    font-weight: 700;
+}
+
+details p {
+    line-height: 1.65;
+    color: #555;
+}
+
+.intro-panel,
+.message {
+    border-radius: 18px;
+    background: white;
+    padding: 30px;
+    box-shadow: 0 12px 30px rgba(24, 18, 12, 0.07);
+}
+
+.example-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 20px;
+}
+
+.example-grid div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 18px;
+    border-radius: 14px;
+    background: #f7f4ef;
+}
+
+.example-grid span {
+    color: #777;
+    font-size: 14px;
+}
+
+.message.error {
+    background: #fff1f1;
+    color: #a12a2a;
+    margin-bottom: 20px;
+}
+
+footer {
+    padding: 28px 24px;
+    text-align: center;
+    color: #888;
+    font-size: 13px;
+}
+
+@media (max-width: 900px) {
+    .card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .example-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .search-form {
+        grid-template-columns: 1fr;
+    }
+
+    .category-row {
+        flex-direction: column;
+    }
+
+    .category-group {
+        width: 100%;
+    }
+
+    .category-group select {
+        flex: 1;
+    }
+
+    .result-header {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .card-grid,
+    .example-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .download-button {
+        width: 100%;
+    }
+}

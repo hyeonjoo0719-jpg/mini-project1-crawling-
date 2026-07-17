@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>칵테일 만들기</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    {% macro render_cocktail_card(cocktail) %}
+    <article class="cocktail-card">
+        <img
+            src="{{ cocktail.image }}"
+            alt="{{ cocktail.name }}"
+            loading="lazy"
+        >
+
+        <div class="card-body">
+            <div class="badges">
+                <span>{{ cocktail.category or "분류 없음" }}</span>
+                <span>{{ cocktail.alcoholic or "정보 없음" }}</span>
+            </div>
+
+            <h3>{{ cocktail.name }}</h3>
+            <p class="glass">사용 잔: {{ cocktail.glass or "정보 없음" }}</p>
+
+            <h4>재료</h4>
+            <ul class="ingredient-list">
+                {% for item in cocktail.ingredients %}
+                    <li>
+                        <span>{{ item.name }}</span>
+                        <strong>{{ item.measure }}</strong>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <details>
+                <summary>제조법 보기</summary>
+                <p>{{ cocktail.instructions or "제조법 정보가 없습니다." }}</p>
+            </details>
+        </div>
+    </article>
+    {% endmacro %}
+
+    <header class="hero">
+        <div class="hero-inner">
+            <p class="eyebrow">Cocktail Finder</p>
+            <h1>오늘술 뭐 먹지</h1>
+            <p class="subtitle">
+                이름이나 재료를 검색해 주세요!
+            </p>
+
+            <form class="search-form" method="get" action="/">
+                <input
+                    type="text"
+                    name="keyword"
+                    value="{{ keyword }}"
+                    placeholder="예: 보드카, 레몬, 진, Margarita, 무알콜"
+                    required
+                >
+
+                <select name="mode">
+                    <option value="all" {% if mode == "all" %}selected{% endif %}>
+                        이름 + 재료
+                    </option>
+                    <option value="name" {% if mode == "name" %}selected{% endif %}>
+                        이름 검색
+                    </option>
+                    <option value="ingredient" {% if mode == "ingredient" %}selected{% endif %}>
+                        재료 검색
+                    </option>
+                </select>
+
+                <button type="submit">검색</button>
+            </form>
+
+
+            <div class="category-search">
+                <p class="category-title">카테고리로 찾기</p>
+                <div class="category-row">
+                    <div class="category-group">
+                        <label for="spirit-select">주종</label>
+                        <select
+                            id="spirit-select"
+                            onchange="if (this.value) { location.href = '/?keyword=' + encodeURIComponent(this.value) + '&mode=ingredient'; }"
+                        >
+                            <option value="">선택하세요</option>
+                            {% for item in spirit_categories %}
+                                <option value="{{ item }}" {% if mode == "ingredient" and keyword == item %}selected{% endif %}>
+                                    {{ item }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="category-group">
+                        <label for="ingredient-select">재료</label>
+                        <select
+                            id="ingredient-select"
+                            onchange="if (this.value) { location.href = '/?keyword=' + encodeURIComponent(this.value) + '&mode=ingredient'; }"
+                        >
+                            <option value="">선택하세요</option>
+                            {% for item in ingredient_categories %}
+                                <option value="{{ item }}" {% if mode == "ingredient" and keyword == item %}selected{% endif %}>
+                                    {{ item }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        {% if error_message %}
+            <div class="message error">{{ error_message }}</div>
+        {% endif %}
+
+        {% if keyword %}
+            <section class="result-header">
+                <div>
+                    <p class="result-label">검색어</p>
+                    <h2>“{{ keyword }}” 검색 결과</h2>
+                    <p>{{ cocktails|length }}개의 칵테일을 찾았습니다.</p>
+                </div>
+
+                <a
+                    class="download-button"
+                    href="/download-csv?keyword={{ keyword|urlencode }}&mode={{ mode }}"
+                >
+                    검색 결과 CSV 저장
+                </a>
+            </section>
+
+            {% if cocktails %}
+                <section class="card-grid">
+                    {% for cocktail in cocktails %}
+                        {{ render_cocktail_card(cocktail) }}
+                    {% endfor %}
+                </section>
+            {% else %}
+                <div class="message">
+                    검색 결과가 없습니다. 다른 이름이나 재료를 검색해보세요.
+                </div>
+            {% endif %}
+        {% else %}
+
+            {% if all_cocktails %}
+                <a class="download-button secondary" href="/download-csv">
+                    전체 데이터 CSV 저장
+                </a>
+                <section class="result-header">
+                    <div>
+                        <p class="result-label">전체 레시피</p>
+                        <h2>총 {{ all_cocktails|length }}개의 레시피</h2>
+                    </div>
+                </section>
+                <section class="card-grid">
+                    {% for cocktail in all_cocktails %}
+                        {{ render_cocktail_card(cocktail) }}
+                    {% endfor %}
+                </section>
+            {% endif %}
+        {% endif %}
+    </main>
+
+    <footer>
+        <p>Data provided by TheCocktailDB API</p>
+    </footer>
+</body>
+</html>
