@@ -17,18 +17,14 @@ a {
 .hero {
     position: relative;
     background: rgba(0, 0, 0, 0.5);
-
-    /* 기존 배경색이나 그라데이션만 아래 사진으로 변경 */
     background-image: url("/static/images/hero.jpg");
     background-size: cover;
     background-position: center right;
     background-repeat: no-repeat;
-
     /* 기존에 사용하던 높이와 여백은 유지 */
     padding: 80px 0 70px;
 }
 
-/* 사진 위에 단색 어두운 막 */
 .hero::before {
     content: "";
     position: absolute;
@@ -37,7 +33,6 @@ a {
     pointer-events: none;
 }
 
-/* 기존 중앙 정렬 설정을 반드시 유지 */
 .hero-inner {
     position: relative;
     z-index: 1;
